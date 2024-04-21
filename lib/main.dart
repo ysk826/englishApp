@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'text_field.dart';
+import 'register_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,19 +40,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-        child: MyTextField(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+            MyTextField(),
+            const SizedBox(
+            height: 20,
+            ),
+            RegisterButton(label: "登録", onPressed: () {}),
+        ],
+      )),
     );
   }
 }
