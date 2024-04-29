@@ -1,3 +1,4 @@
+import 'package:english_app/words_page.dart';
 import 'package:flutter/material.dart';
 import 'data.dart';
 import 'text_field.dart';
@@ -53,33 +54,19 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 20,
           ),
           RegisterButton(
-              label: "登録",
-              onPressed: () {
-                String word = controller.text;
-                _databaseHelper.insertWord(word);
-              }),
+            label: "登録",
+            controller: controller,
+          ),
           const SizedBox(
             height: 20,
           ),
-          FutureBuilder<List<Map<String, dynamic>>>(
-            future: _databaseHelper.getWords(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: Text(snapshot.data![index]['word'].toString()),
-                    );
-                  },
-                );
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return const CircularProgressIndicator();
-              }
+          ElevatedButton(
+            child: Text('Words List'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WordsPage()),
+              );
             },
           ),
         ],

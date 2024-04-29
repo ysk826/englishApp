@@ -24,17 +24,22 @@ class DatabaseHelper {
 
   // データベースを作成する
   Future<void> _onCreate(Database db, int version) async {
-    await db.execute(
-      "CREATE TABLE words(id INTEGER PRIMARY KEY, word TEXT)",
-    );
+    await db.execute('''
+      CREATE TABLE words (
+        id INTEGER PRIMARY KEY, 
+        word TEXT, 
+        meaning TEXT
+      )
+    ''');
   }
 
   // データベースに単語を追加する
-  Future<void> insertWord(String word) async {
+  Future<void> insertWord(String word, String meaning) async {
+    print('insertWord called with word: $word and meaning: $meaning'); // Debug statement
     final db = await database;
     await db.insert(
       "words",
-      {"word": word},
+      {"word": word, "meaning": meaning},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
