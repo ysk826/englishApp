@@ -60,4 +60,17 @@ class DatabaseHelper {
       whereArgs: [id],
     );
   }
+
+  Future<void> updateWord(int id, String newText) async {
+    // Open the database
+    final db = await openDatabase('my_database.db');
+
+    // Update the word's meaning
+    await db.update(
+      'words',
+      {'meaning': newText},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }

@@ -11,12 +11,19 @@ class WordsPage extends StatefulWidget {
 
 class _WordsPageState extends State<WordsPage> {
   final _databaseHelper = DatabaseHelper();
+  final _controller = TextEditingController();
 
   // 削除のロジックを含むメソッド
   Future<void> deleteWord(int id) async {
     await _databaseHelper.deleteWord(id);
     // UIを更新する
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // 追加: _controllerを破棄
+    super.dispose();
   }
 
   @override
@@ -57,8 +64,8 @@ class _WordsPageState extends State<WordsPage> {
                           isScrollControlled: true,
                           builder: (BuildContext context) {
                             return Container(
-                              // 画面全体を覆う高さに設定
-                              height: MediaQuery.of(context).size.height,
+                              // 画面全体(94%)を覆う高さに設定
+                              height: MediaQuery.of(context).size.height * 0.94,
                               // 背景色を白に設定 後で消す
                               color: Colors.white,
                               child: Padding(
@@ -78,28 +85,40 @@ class _WordsPageState extends State<WordsPage> {
                                           // 左端に配置
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
+                                            // 単語を表示
                                             Text(
-                                              // 単語を表示
                                               snapshot.data![index]["word"].toString(),
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 20),
                                             ),
-                                            SizedBox(height: 10),
+                                            // 高さ10pxのスペース
+                                            const SizedBox(height: 10),
                                             // 意味を表示
                                             Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              // 左端に配置
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
+                                                // "Meaning"というテキストを表示
                                                 const Text(
                                                   'Meaning',
                                                   style: TextStyle(
-                                                      fontSize: 18,
+                                                    fontSize: 18,
                                                     color: Colors.grey,
                                                   ),
                                                 ),
                                                 MyEditableText(
-                                                  initialText: '${snapshot.data![index]['meaning'].toString()}'
+                                                  initialText: snapshot.data![index]['meaning'].toString(),
+                                                  onSubmitted: (newText) {
+                                                    // updateWordメソッドを呼び出す
+                                                    _databaseHelper.updateWord(
+                                                      snapshot.data![index]['id'],
+                                                      newText,
+                                                    );
+                                                    // UIを更新する
+                                                    setState(() { });
+                                                  },
+                                                  controller: _controller,
                                                 ),
                                               ],
                                             ),
@@ -121,6 +140,13 @@ class _WordsPageState extends State<WordsPage> {
                                       ElevatedButton(
                                         child: Text('Close'),
                                         onPressed: () {
+                                          // updateWordメソッドを呼び出す
+                                          _databaseHelper.updateWord(
+                                            snapshot.data![index]['id'],
+                                            _controller.text,
+                                          );
+                                          // UIを更新する
+                                          setState(() { });
                                           Navigator.pop(context);
                                         },
                                       ),

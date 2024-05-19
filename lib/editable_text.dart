@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 class MyEditableText extends StatefulWidget {
+  // コンストラクタ
   final String initialText;
+  final Function(String) onSubmitted;
+  final TextEditingController controller;
 
-  MyEditableText({required this.initialText});
+  MyEditableText(
+      {required this.initialText,
+      required this.onSubmitted,
+      required this.controller});
 
   @override
   _MyEditableTextState createState() => _MyEditableTextState();
@@ -16,7 +22,8 @@ class _MyEditableTextState extends State<MyEditableText> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.initialText);
+    widget.controller.text =
+        widget.initialText; // 変更: _controllerをwidget.controllerに変更
   }
 
   @override
@@ -31,7 +38,8 @@ class _MyEditableTextState extends State<MyEditableText> {
       },
       child: _isEditing
           ? TextFormField(
-              controller: _controller,
+              controller:
+                  widget.controller, // 変更: _controllerをwidget.controllerに変更
               // テキストフィールドのスタイルを設定
               style: const TextStyle(fontSize: 18),
               decoration: const InputDecoration(
@@ -40,11 +48,6 @@ class _MyEditableTextState extends State<MyEditableText> {
                   borderSide: BorderSide.none,
                 ),
               ),
-              onFieldSubmitted: (value) {
-                setState(() {
-                  _isEditing = false;
-                });
-              },
             )
           : Text(widget.initialText, style: const TextStyle(fontSize: 18)),
     );
