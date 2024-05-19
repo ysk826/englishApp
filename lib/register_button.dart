@@ -50,7 +50,7 @@ class RegisterButton extends StatelessWidget {
       return ElevatedButton(
         child: Text(label),
         style: ElevatedButton.styleFrom(
-          primary: Colors.blue,
+          backgroundColor: Colors.blue,
         ),
         onPressed: () {
           showModalBottomSheet(

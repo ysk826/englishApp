@@ -33,7 +33,7 @@ class DatabaseHelper {
     ''');
   }
 
-  // データベースに単語を追加する
+  // データベースに単語と意味を追加する
   Future<void> insertWord(String word, String meaning) async {
     print('insertWord called with word: $word and meaning: $meaning'); // Debug statement
     final db = await database;
@@ -49,5 +49,15 @@ class DatabaseHelper {
     final db = await database;
     var result = await db.query('words');
     return List<Map<String, dynamic>>.from(result);
+  }
+
+  // データベースから単語を削除する
+  Future<void> deleteWord(int id) async {
+    final db = await database;
+    await db.delete(
+      'words',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
