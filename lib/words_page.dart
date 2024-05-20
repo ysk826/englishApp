@@ -74,7 +74,7 @@ class _WordsPageState extends State<WordsPage> {
                                 // Alignウィジェットは、その子ウィジェットの位置を制御
                                 child: Align(
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       // 単語と意味を表示
                                       Container(
@@ -83,11 +83,13 @@ class _WordsPageState extends State<WordsPage> {
                                         width: double.infinity,
                                         child: Column(
                                           // 左端に配置
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             // 単語を表示
                                             Text(
-                                              snapshot.data![index]["word"].toString(),
+                                              snapshot.data![index]["word"]
+                                                  .toString(),
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 20),
@@ -97,7 +99,8 @@ class _WordsPageState extends State<WordsPage> {
                                             // 意味を表示
                                             Column(
                                               // 左端に配置
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 // "Meaning"というテキストを表示
                                                 const Text(
@@ -107,16 +110,20 @@ class _WordsPageState extends State<WordsPage> {
                                                     color: Colors.grey,
                                                   ),
                                                 ),
+                                                // 意味の部分をタッチすれば編集できるようにする
                                                 MyEditableText(
-                                                  initialText: snapshot.data![index]['meaning'].toString(),
+                                                  initialText: snapshot
+                                                      .data![index]['meaning']
+                                                      .toString(),
                                                   onSubmitted: (newText) {
                                                     // updateWordメソッドを呼び出す
                                                     _databaseHelper.updateWord(
-                                                      snapshot.data![index]['id'],
+                                                      snapshot.data![index]
+                                                          ['id'],
                                                       newText,
                                                     );
                                                     // UIを更新する
-                                                    setState(() { });
+                                                    setState(() {});
                                                   },
                                                   controller: _controller,
                                                 ),
@@ -125,30 +132,44 @@ class _WordsPageState extends State<WordsPage> {
                                           ],
                                         ),
                                       ),
-                                      // 削除ボタン
-                                      ElevatedButton(
-                                        child: Text('Delete'),
-                                        onPressed: () async {
-                                          // deleteWordメソッドを呼び出す
-                                          await deleteWord(
-                                              snapshot.data![index]['id']);
-                                          // モーダルを閉じる
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                      // 閉じるボタン
-                                      ElevatedButton(
-                                        child: Text('Close'),
-                                        onPressed: () {
-                                          // updateWordメソッドを呼び出す
-                                          _databaseHelper.updateWord(
-                                            snapshot.data![index]['id'],
-                                            _controller.text,
-                                          );
-                                          // UIを更新する
-                                          setState(() { });
-                                          Navigator.pop(context);
-                                        },
+                                      // 色を付けるためのContainer 後で消す
+                                      Container(
+                                        color: Colors.grey[400],
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          // ボタンを横に並べる
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              // 削除ボタン
+                                              ElevatedButton(
+                                                child: const Text('Delete'),
+                                                onPressed: () async {
+                                                  // deleteWordメソッドを呼び出す
+                                                  await deleteWord(snapshot
+                                                      .data![index]['id']);
+                                                  // モーダルを閉じる
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              // 閉じるボタン
+                                              ElevatedButton(
+                                                child: const Text('Close'),
+                                                onPressed: () {
+                                                  // updateWordメソッドを呼び出す
+                                                  _databaseHelper.updateWord(
+                                                    snapshot.data![index]['id'],
+                                                    _controller.text,
+                                                  );
+                                                  // UIを更新する
+                                                  setState(() {});
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
