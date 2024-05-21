@@ -132,6 +132,8 @@ class _WordsPageState extends State<WordsPage> {
                                           ],
                                         ),
                                       ),
+                                      // 高さ10pxのスペース
+                                      const SizedBox(height: 40),
                                       // 色を付けるためのContainer 後で消す
                                       Container(
                                         color: Colors.grey[400],

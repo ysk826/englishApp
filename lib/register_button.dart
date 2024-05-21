@@ -15,15 +15,20 @@ class RegisterButton extends StatelessWidget {
     final _databaseHelper = DatabaseHelper();
 
     if (Platform.isIOS) {
+      // 登録ボタン
       return CupertinoButton(
           child: Text(label),
           color: CupertinoColors.activeBlue,
+          // ボタンが押された時の処理
           onPressed: () {
             showModalBottomSheet(
+              // 画面全体を覆おうように設定
+              isScrollControlled: true,
               context: context,
               builder: (BuildContext context) {
                 final meaningController = TextEditingController();
-                return Padding(
+                return Container(
+                  height: MediaQuery.of(context).size.height * 0.94,
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

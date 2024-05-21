@@ -45,32 +45,38 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Padding(
+        // ここで上部にスペースを追加
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Container(
+          color: Colors.grey,
           child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          MyTextField(controller: controller),
-          const SizedBox(
-            height: 20,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MyTextField(controller: controller),
+              const SizedBox(
+                height: 20,
+              ),
+              RegisterButton(
+                label: "登録",
+                controller: controller,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                child: const Text('Words List'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WordsPage()),
+                  );
+                },
+              ),
+            ],
           ),
-          RegisterButton(
-            label: "登録",
-            controller: controller,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            child: Text('Words List'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => WordsPage()),
-              );
-            },
-          ),
-        ],
-      )),
+        ),
+      ),
     );
   }
 }
