@@ -8,6 +8,7 @@ class RegisterButton extends StatelessWidget {
   final String label;
   final TextEditingController controller;
 
+  // コンストラクタ
   RegisterButton({required this.label, required this.controller});
 
   @override
@@ -33,15 +34,17 @@ class RegisterButton extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Text('Enter the meaning'),
+                      const Text('Enter the meaning'),
                       TextField(controller: meaningController),
                       ElevatedButton(
-                        child: Text('Save'),
+                        child: const Text('Save'),
                         onPressed: () {
-                          print('Save button pressed'); // Debug statement
                           String word = controller.text;
                           String meaning = meaningController.text;
                           _databaseHelper.insertWord(word, meaning);
+                          // text field clear
+                          controller.clear();
+                          // モーダルを閉じる
                           Navigator.pop(context);
                         },
                       ),
@@ -67,10 +70,10 @@ class RegisterButton extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text('Enter the meaning'),
+                    const Text('Enter the meaning'),
                     TextField(controller: meaningController),
                     ElevatedButton(
-                      child: Text('Save'),
+                      child: const Text('Save'),
                       onPressed: () {
                         String word = controller.text;
                         String meaning = meaningController.text;
