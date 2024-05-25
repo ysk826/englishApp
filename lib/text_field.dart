@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
+class WordTextField extends StatelessWidget {
   final TextEditingController controller;
 
-  MyTextField({required this.controller});
+  WordTextField({required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Enter text",
         border: OutlineInputBorder(),
       ),

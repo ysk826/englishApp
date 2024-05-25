@@ -24,7 +24,7 @@ class RegisterButton extends StatelessWidget {
         onPressed: () {
           // テキストフィールドから入力された文字列を取得
           String word = controller.text.trim();
-          // 入力された文字列が空でない場合
+          // 入力された文字列が空でない場合、モーダルを表示
           if (word.isNotEmpty) {
             showModalBottomSheet(
               // 画面全体を覆おうように設定
@@ -42,6 +42,7 @@ class RegisterButton extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       const Text('Enter the meaning'),
+                      // 意味を入力するテキストフィールド
                       TextField(controller: meaningController),
                       // 保存ボタン
                       ElevatedButton(
@@ -50,7 +51,7 @@ class RegisterButton extends StatelessWidget {
                         onPressed: () {
                           // 意味を取得
                           String meaning = meaningController.text.trim();
-                          // 意味が空でない場合
+                          // 意味が空でない場合、データベースに登録
                           if (meaning.isNotEmpty) {
                           _databaseHelper.insertWord(word, meaning);
                           // text field clear

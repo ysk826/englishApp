@@ -33,11 +33,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final controller = TextEditingController();
-  final _databaseHelper = DatabaseHelper();
-
-  void _incrementCounter() {
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,17 +41,21 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Padding(
-        // ここで上部にスペースを追加
+        // 上部にスペースを追加
         padding: const EdgeInsets.only(top: 20.0),
+        // 背景色をグレーに設定
         child: Container(
           color: Colors.grey,
+          // 中央に配置
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              MyTextField(controller: controller),
+              // テキストフィールドを呼び出す
+              WordTextField(controller: controller),
               const SizedBox(
                 height: 20,
               ),
+              // 登録ボタンを呼び出す
               RegisterButton(
                 label: "登録",
                 controller: controller,
@@ -64,12 +63,14 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(
                 height: 20,
               ),
+              // 単語リストへの遷移ボタンを呼び出す
               ElevatedButton(
                 child: const Text('Words List'),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => WordsPage()),
+                    // 単語リスト画面へ遷移
+                    MaterialPageRoute(builder: (context) => const WordsPage()),
                   );
                 },
               ),

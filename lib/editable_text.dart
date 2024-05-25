@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// 編集可能なテキストフィールドを作成するウィジェット
 class MyEditableText extends StatefulWidget {
   // コンストラクタ
   final String initialText;
@@ -16,14 +17,13 @@ class MyEditableText extends StatefulWidget {
 }
 
 class _MyEditableTextState extends State<MyEditableText> {
+  // 編集モードかどうかを判定するフラグ
   bool _isEditing = false;
-  late TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
-    widget.controller.text =
-        widget.initialText; // 変更: _controllerをwidget.controllerに変更
+    widget.controller.text = widget.initialText;
   }
 
   @override
@@ -38,12 +38,12 @@ class _MyEditableTextState extends State<MyEditableText> {
       },
       child: _isEditing
           ? TextFormField(
-              controller:
-                  widget.controller, // 変更: _controllerをwidget.controllerに変更
+              controller: widget.controller,
               // テキストフィールドのスタイルを設定
               style: const TextStyle(fontSize: 18),
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.zero,
+                // テキストフィールドの境界線を設定
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                 ),

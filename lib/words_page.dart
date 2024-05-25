@@ -22,7 +22,8 @@ class _WordsPageState extends State<WordsPage> {
 
   @override
   void dispose() {
-    _controller.dispose(); // 追加: _controllerを破棄
+    // コントローラーを破棄
+    _controller.dispose();
     super.dispose();
   }
 
@@ -30,7 +31,7 @@ class _WordsPageState extends State<WordsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Words'),
+        title: const Text('Words'),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _databaseHelper.getWords(),
@@ -182,7 +183,7 @@ class _WordsPageState extends State<WordsPage> {
                         );
                       },
                     ),
-                    Divider(),
+                    const Divider(),
                   ],
                 );
               },
