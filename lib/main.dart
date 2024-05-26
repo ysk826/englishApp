@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Add a word'),
     );
   }
 }
@@ -38,7 +38,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        // タイトルを表示
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            fontSize: 30.0,
+          ),
+        ),
       ),
       body: Padding(
         // 上部にスペースを追加

@@ -44,6 +44,8 @@ class RegisterButton extends StatelessWidget {
                       const Text('Enter the meaning'),
                       // 意味を入力するテキストフィールド
                       TextField(controller: meaningController),
+                      // 20pxのスペースを追加
+                      const SizedBox(height: 20.0),
                       // 保存ボタン
                       ElevatedButton(
                         child: const Text('Save'),

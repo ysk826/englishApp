@@ -71,7 +71,7 @@ class _WordsPageState extends State<WordsPage> {
                               color: Colors.white,
                               child: Padding(
                                 // 左右に8pxのpadding
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(11.0),
                                 // Alignウィジェットは、その子ウィジェットの位置を制御
                                 child: Align(
                                   child: Column(

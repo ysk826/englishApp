@@ -49,7 +49,10 @@ class _MyEditableTextState extends State<MyEditableText> {
                 ),
               ),
             )
-          : Text(widget.initialText, style: const TextStyle(fontSize: 18)),
+          : Text(
+              widget.initialText,
+              style: const TextStyle(fontSize: 18),
+            ),
     );
   }
 }
