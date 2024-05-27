@@ -37,21 +37,35 @@ class _MyEditableTextState extends State<MyEditableText> {
         });
       },
       child: _isEditing
-          ? TextFormField(
-              controller: widget.controller,
-              // テキストフィールドのスタイルを設定
-              style: const TextStyle(fontSize: 18),
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.zero,
-                // テキストフィールドの境界線を設定
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
+          ? Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: TextFormField(
+                controller: widget.controller,
+                // テキストフィールドのスタイルを設定
+                style: const TextStyle(
+                  fontSize: 18,
+                  height: 5,
+                ),
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.zero,
+                  // テキストフィールドの境界線を設定
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
                 ),
               ),
             )
-          : Text(
-              widget.initialText,
-              style: const TextStyle(fontSize: 18),
+          : Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: Text(
+                widget.initialText,
+                style: const TextStyle(
+                  fontSize: 18,
+                  height: 5,
+                ),
+              ),
             ),
     );
   }
