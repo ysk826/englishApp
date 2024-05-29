@@ -43,7 +43,11 @@ class RegisterButton extends StatelessWidget {
                     children: <Widget>[
                       const Text('Enter the meaning'),
                       // 意味を入力するテキストフィールド
-                      TextField(controller: meaningController),
+                      TextField(
+                        controller: meaningController,
+                        // テキストが複数行になるように設定
+                        maxLines: null,
+                      ),
                       // 20pxのスペースを追加
                       const SizedBox(height: 20.0),
                       // 保存ボタン
@@ -55,11 +59,11 @@ class RegisterButton extends StatelessWidget {
                           String meaning = meaningController.text.trim();
                           // 意味が空でない場合、データベースに登録
                           if (meaning.isNotEmpty) {
-                          _databaseHelper.insertWord(word, meaning);
-                          // text field clear
-                          controller.clear();
-                          // モーダルを閉じる
-                          Navigator.pop(context);
+                            _databaseHelper.insertWord(word, meaning);
+                            // text field clear
+                            controller.clear();
+                            // モーダルを閉じる
+                            Navigator.pop(context);
                           }
                         },
                       ),

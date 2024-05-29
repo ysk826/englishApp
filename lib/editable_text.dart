@@ -28,6 +28,8 @@ class _MyEditableTextState extends State<MyEditableText> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
+      // テキストが複数行になるように設定
+      maxLines: null,
       style: const TextStyle(fontSize: 18),
       decoration: const InputDecoration(
         contentPadding: EdgeInsets.zero,
