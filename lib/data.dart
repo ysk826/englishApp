@@ -2,6 +2,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'card_word.dart';
+
 class DatabaseHelper {
   static Database? _database;
   static const _databaseName = "my_database.db";
@@ -35,7 +37,8 @@ class DatabaseHelper {
 
   // データベースに単語と意味を追加する
   Future<void> insertWord(String word, String meaning) async {
-    print('insertWord called with word: $word and meaning: $meaning'); // Debug statement
+    print(
+        'insertWord called with word: $word and meaning: $meaning'); // Debug statement
     final db = await database;
     await db.insert(
       "words",
@@ -60,7 +63,8 @@ class DatabaseHelper {
       whereArgs: [id],
     );
   }
- // データベースの単語を更新する
+
+  // データベースの単語を更新する
   Future<void> updateWord(int id, String newText) async {
     // Open the database
     final db = await openDatabase('my_database.db');
@@ -72,5 +76,17 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  Future<List<CardWord>> getCardWords() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('words');
+    return List.generate(maps.length, (i) {
+      return CardWord(
+        id: maps[i]['id'],
+        word: maps[i]['word'],
+        meaning: maps[i]['meaning'],
+      );
+    });
   }
 }
