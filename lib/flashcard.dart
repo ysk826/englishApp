@@ -11,10 +11,14 @@ class Flashcard extends StatefulWidget {
 
 class _FlashcardState extends State<Flashcard> {
   final _databaseHelper = DatabaseHelper();
-  late List<String> allWords;
+  late List<CardWord> allWords;
 
-  // currentWordの初期化が必要
+  // currentWord、currentMeaningの初期化が必要
   late String currentWord = "";
+  late String currentMeaning = "";
+
+  // 意味の表示を切り替えるためのフラグ
+  bool showMeaning = false;
 
   @override
   void initState() {
@@ -23,20 +27,28 @@ class _FlashcardState extends State<Flashcard> {
   }
 
   void setupWords() async {
-    List<CardWord> cardWords = await _databaseHelper.getCardWords();
-    // 単語を文字列に変換してリストに格納
-    allWords = cardWords.map((cardWord) => cardWord.word).toList();
+    // データベースから全ての単語を取得
+    allWords = await _databaseHelper.getCardWords();
     allWords.shuffle();
-    currentWord = allWords.removeLast();
+    // 単語を文字列に変換してリストに格納
+    var lastCardWord = allWords.removeLast();
+    // 単語と意味を取得
+    currentWord = lastCardWord.word;
+    currentMeaning = lastCardWord.meaning;
     setState(() {});
   }
 
   void nextWord() {
     if (allWords.isNotEmpty) {
-      currentWord = allWords.removeLast();
+      var lastCardWord = allWords.removeLast();
+      currentWord = lastCardWord.word;
+      currentMeaning = lastCardWord.meaning;
     } else {
       currentWord = "No more words";
+      currentMeaning = "";
     }
+    // 次の単語を表示する時は意味を隠す
+    showMeaning = false;
     setState(() {});
   }
 
@@ -55,16 +67,39 @@ class _FlashcardState extends State<Flashcard> {
           children: <Widget>[
             Text(
               currentWord,
-              style: TextStyle(fontSize: 24),
+              style: const TextStyle(fontSize: 24),
             ),
-            ElevatedButton(
-              child: Text('◯'),
-              onPressed: nextWord,
-            ),
-            ElevatedButton(
-              child: Text('×'),
-              onPressed: nextWord,
-            ),
+            // 意味を表示するかどうかを制御
+            if (showMeaning)
+              Text(
+                currentMeaning,
+                style: const TextStyle(fontSize: 20),
+              ),
+
+            if (!showMeaning) // 意味が表示されていないときだけ◯ボタンと×ボタンを表示
+              ...[
+              ElevatedButton(
+                child: const Text('◯'),
+                onPressed: () {
+                  setState(() {
+                    showMeaning = true; // 意味を表示
+                  });
+                },
+              ),
+              ElevatedButton(
+                child: const Text('×'),
+                onPressed: () {
+                  setState(() {
+                    showMeaning = true; // 意味を表示
+                  });
+                },
+              ),
+            ],
+            if (showMeaning) // 次の単語へのボタンを表示するかどうかを制御
+              ElevatedButton(
+                child: const Text('Next'),
+                onPressed: nextWord,
+              ),
           ],
         ),
       ),
