@@ -1,6 +1,7 @@
 import 'package:english_app/words_page.dart';
 import 'package:flutter/material.dart';
 import 'data.dart';
+import 'flashcard.dart';
 import 'text_field.dart';
 import 'register_button.dart';
 
@@ -80,6 +81,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 },
               ),
+              ElevatedButton(
+                child: const Text('Flashcard'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Flashcard()),
+                  );
+                },)
             ],
           ),
         ),

@@ -4,5 +4,6 @@ class CardWord {
   final String word;
   final String meaning;
 
+  // 名前付き引数
   CardWord({required this.id, required this.word, required this.meaning});
 }

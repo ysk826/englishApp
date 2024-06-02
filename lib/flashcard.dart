@@ -1,3 +1,4 @@
+import 'package:english_app/card_word.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,9 @@ class Flashcard extends StatefulWidget {
 class _FlashcardState extends State<Flashcard> {
   final _databaseHelper = DatabaseHelper();
   late List<String> allWords;
-  late String currentWord;
+
+  // currentWordの初期化が必要
+  late String currentWord = "";
 
   @override
   void initState() {
@@ -20,7 +23,9 @@ class _FlashcardState extends State<Flashcard> {
   }
 
   void setupWords() async {
-    allWords = (await _databaseHelper.getCardWords()).cast<String>();
+    List<CardWord> cardWords = await _databaseHelper.getCardWords();
+    // 単語を文字列に変換してリストに格納
+    allWords = cardWords.map((cardWord) => cardWord.word).toList();
     allWords.shuffle();
     currentWord = allWords.removeLast();
     setState(() {});
@@ -41,22 +46,27 @@ class _FlashcardState extends State<Flashcard> {
       appBar: AppBar(
         title: Text('Word Learning'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            currentWord,
-            style: TextStyle(fontSize: 24),
-          ),
-          ElevatedButton(
-            child: Text('Remembered'),
-            onPressed: nextWord,
-          ),
-          ElevatedButton(
-            child: Text('Not Remembered'),
-            onPressed: nextWord,
-          ),
-        ],
+      body: Container(
+        // 幅を画面いっぱいに広げる
+        width: double.infinity,
+        color: Colors.grey[400],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              currentWord,
+              style: TextStyle(fontSize: 24),
+            ),
+            ElevatedButton(
+              child: Text('◯'),
+              onPressed: nextWord,
+            ),
+            ElevatedButton(
+              child: Text('×'),
+              onPressed: nextWord,
+            ),
+          ],
+        ),
       ),
     );
   }

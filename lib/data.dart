@@ -78,6 +78,7 @@ class DatabaseHelper {
     );
   }
 
+  // データベースからフラッシュカードの単語を取得する
   Future<List<CardWord>> getCardWords() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('words');
