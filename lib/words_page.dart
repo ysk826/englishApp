@@ -49,10 +49,12 @@ class _WordsPageState extends State<WordsPage> {
                       title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // 単語を表示
                           Text(
                             snapshot.data![index]['word'].toString(),
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
+                          // 意味を表示
                           Text(snapshot.data![index]['meaning'].toString()),
                         ],
                       ),

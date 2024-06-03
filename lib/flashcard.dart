@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'data.dart';
+import 'review_words_page.dart';
 
 class Flashcard extends StatefulWidget {
   @override
@@ -12,6 +13,8 @@ class Flashcard extends StatefulWidget {
 class _FlashcardState extends State<Flashcard> {
   final _databaseHelper = DatabaseHelper();
   late List<CardWord> allWords;
+  // フラッシュカードのコピー
+  late List<CardWord> allWordsCopy;
 
   // currentWord、currentMeaningの初期化が必要
   late String currentWord = "";
@@ -29,6 +32,7 @@ class _FlashcardState extends State<Flashcard> {
   void setupWords() async {
     // データベースから全ての単語を取得
     allWords = await _databaseHelper.getCardWords();
+    allWordsCopy = List.from(allWords);
     allWords.shuffle();
     // 単語を文字列に変換してリストに格納
     var lastCardWord = allWords.removeLast();
@@ -44,8 +48,11 @@ class _FlashcardState extends State<Flashcard> {
       currentWord = lastCardWord.word;
       currentMeaning = lastCardWord.meaning;
     } else {
-      currentWord = "No more words";
-      currentMeaning = "";
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ReviewWordsPage(allWordsCopy: allWordsCopy)),
+      );
     }
     // 次の単語を表示する時は意味を隠す
     showMeaning = false;
