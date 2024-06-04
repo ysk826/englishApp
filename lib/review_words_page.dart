@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'card_word.dart';
 
+// 単語の復習ページ
 class ReviewWordsPage extends StatefulWidget {
   final List<CardWord> allWordsCopy;
 
