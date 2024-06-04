@@ -86,6 +86,7 @@ class _FlashcardState extends State<Flashcard> {
                 currentMeaning,
                 style: const TextStyle(fontSize: 20),
               ),
+            // ◯ボタンを表示
             Visibility(
               // showMeaningがfalseのときだけボタンを表示
               visible: !showMeaning,
@@ -98,6 +99,7 @@ class _FlashcardState extends State<Flashcard> {
                 },
               ),
             ),
+            // ×ボタンを表示
             Visibility(
               // showMeaningがfalseのときだけボタンを表示
               visible: !showMeaning,
@@ -110,6 +112,7 @@ class _FlashcardState extends State<Flashcard> {
                 },
               ),
             ),
+            // Nextボタンを表示
             Visibility(
               // showMeaningがtrueのときだけボタンを表示
               visible: showMeaning,
