@@ -1,10 +1,10 @@
 import 'package:english_app/card_word.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'data.dart';
 import 'review_words_page.dart';
 
+// フラッシュカードのページ
 class Flashcard extends StatefulWidget {
   @override
   _FlashcardState createState() => _FlashcardState();
@@ -13,6 +13,7 @@ class Flashcard extends StatefulWidget {
 class _FlashcardState extends State<Flashcard> {
   final _databaseHelper = DatabaseHelper();
   late List<CardWord> allWords;
+
   // フラッシュカードのコピー
   late List<CardWord> allWordsCopy;
 
@@ -29,6 +30,7 @@ class _FlashcardState extends State<Flashcard> {
     setupWords();
   }
 
+  // 最初に実行されるメソッド
   void setupWords() async {
     // データベースから全ての単語を取得
     allWords = await _databaseHelper.getCardWords();
@@ -42,7 +44,9 @@ class _FlashcardState extends State<Flashcard> {
     setState(() {});
   }
 
+  // 次の単語を表示するメソッド
   void nextWord() {
+    // 単語が残っている場合
     if (allWords.isNotEmpty) {
       var lastCardWord = allWords.removeLast();
       currentWord = lastCardWord.word;
@@ -63,7 +67,7 @@ class _FlashcardState extends State<Flashcard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Word Learning'),
+        title: const Text('Word Learning'),
       ),
       body: Container(
         // 幅を画面いっぱいに広げる
@@ -82,31 +86,38 @@ class _FlashcardState extends State<Flashcard> {
                 currentMeaning,
                 style: const TextStyle(fontSize: 20),
               ),
-
-            if (!showMeaning) // 意味が表示されていないときだけ◯ボタンと×ボタンを表示
-              ...[
-              ElevatedButton(
+            Visibility(
+              // showMeaningがfalseのときだけボタンを表示
+              visible: !showMeaning,
+              child: ElevatedButton(
                 child: const Text('◯'),
                 onPressed: () {
                   setState(() {
-                    showMeaning = true; // 意味を表示
+                    showMeaning = true;
                   });
                 },
               ),
-              ElevatedButton(
+            ),
+            Visibility(
+              // showMeaningがfalseのときだけボタンを表示
+              visible: !showMeaning,
+              child: ElevatedButton(
                 child: const Text('×'),
                 onPressed: () {
                   setState(() {
-                    showMeaning = true; // 意味を表示
+                    showMeaning = true;
                   });
                 },
               ),
-            ],
-            if (showMeaning) // 次の単語へのボタンを表示するかどうかを制御
-              ElevatedButton(
+            ),
+            Visibility(
+              // showMeaningがtrueのときだけボタンを表示
+              visible: showMeaning,
+              child: ElevatedButton(
                 child: const Text('Next'),
                 onPressed: nextWord,
               ),
+            ),
           ],
         ),
       ),
