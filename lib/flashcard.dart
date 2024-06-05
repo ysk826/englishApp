@@ -87,29 +87,32 @@ class _FlashcardState extends State<Flashcard> {
                 style: const TextStyle(fontSize: 20),
               ),
             Visibility(
-              visible: !showMeaning, // showMeaningがfalseのときだけ表示
+              // showMeaningがfalseのときだけ◯ボタンを表示
+              visible: !showMeaning,
               child: ElevatedButton(
                 child: const Text('◯'),
                 onPressed: () {
                   setState(() {
-                    showMeaning = true; // 意味を表示
+                    showMeaning = true;
                   });
                 },
               ),
             ),
             Visibility(
-              visible: !showMeaning, // showMeaningがfalseのときだけ表示
+              // showMeaningがfalseのときだけ×ボタンを表示
+              visible: !showMeaning,
               child: ElevatedButton(
                 child: const Text('×'),
                 onPressed: () {
                   setState(() {
-                    showMeaning = true; // 意味を表示
+                    showMeaning = true;
                   });
                 },
               ),
             ),
             Visibility(
-              visible: showMeaning, // showMeaningがtrueのときだけ表示
+              // showMeaningがtrueのときだけボタンを表示
+              visible: showMeaning,
               child: ElevatedButton(
                 child: const Text('Next'),
                 onPressed: nextWord,
