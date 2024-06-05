@@ -91,29 +91,36 @@ class _FlashcardState extends State<Flashcard> {
                 currentMeaning,
                 style: const TextStyle(fontSize: 20),
               ),
-            Visibility(
-              // showMeaningがfalseのときだけ◯ボタンを表示
-              visible: !showMeaning,
-              child: ElevatedButton(
-                child: const Text('◯'),
-                onPressed: () {
-                  setState(() {
-                    showMeaning = true;
-                  });
-                },
-              ),
-            ),
-            Visibility(
-              // showMeaningがfalseのときだけ×ボタンを表示
-              visible: !showMeaning,
-              child: ElevatedButton(
-                child: const Text('×'),
-                onPressed: () {
-                  setState(() {
-                    showMeaning = true;
-                  });
-                },
-              ),
+            // ◯ボタンと×ボタンを横並びに配置
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // 中央に配置
+              children: <Widget>[
+                Visibility(
+                  // showMeaningがfalseのときだけ◯ボタンを表示
+                  visible: !showMeaning,
+                  child: ElevatedButton(
+                    child: const Text('◯'),
+                    onPressed: () {
+                      setState(() {
+                        showMeaning = true;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Visibility(
+                  // showMeaningがfalseのときだけ×ボタンを表示
+                  visible: !showMeaning,
+                  child: ElevatedButton(
+                    child: const Text('×'),
+                    onPressed: () {
+                      setState(() {
+                        showMeaning = true;
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
             Visibility(
               // showMeaningがtrueのときだけボタンを表示
