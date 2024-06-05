@@ -1,5 +1,4 @@
 import 'package:english_app/card_word.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'data.dart';
 import 'review_words_page.dart';
@@ -12,9 +11,9 @@ class Flashcard extends StatefulWidget {
 
 class _FlashcardState extends State<Flashcard> {
   final _databaseHelper = DatabaseHelper();
-  late List<CardWord> allWords;
 
-  // フラッシュカードのコピー
+  // フラッシュカードとそのコピー
+  late List<CardWord> allWords;
   late List<CardWord> allWordsCopy;
 
   // currentWord、currentMeaningの初期化が必要
@@ -32,12 +31,12 @@ class _FlashcardState extends State<Flashcard> {
 
   // 最初に実行されるメソッド
   void setupWords() async {
-    // データベースから全ての単語を取得
+    // データベースから全ての単語を取得、コピーを作成、シャッフル
     allWords = await _databaseHelper.getCardWords();
     allWordsCopy = List.from(allWords);
     allWords.shuffle();
-    // 単語を文字列に変換してリストに格納
-    var lastCardWord = allWords.removeLast();
+    // allWordsの最後の要素を取得して削除
+    CardWord lastCardWord = allWords.removeLast();
     // 単語と意味を取得
     currentWord = lastCardWord.word;
     currentMeaning = lastCardWord.meaning;
@@ -46,14 +45,18 @@ class _FlashcardState extends State<Flashcard> {
 
   // 次の単語を表示するメソッド
   void nextWord() {
-    // 単語が残っている場合
+    // リストに単語が残っている場合
     if (allWords.isNotEmpty) {
-      var lastCardWord = allWords.removeLast();
+      CardWord lastCardWord = allWords.removeLast();
       currentWord = lastCardWord.word;
       currentMeaning = lastCardWord.meaning;
+      // リストに単語が残っていない場合
     } else {
+      // フラッシュカードを引数に持って、復習ページに遷移
       Navigator.push(
+        // 現在のビルドコンテキスト
         context,
+        // 遷移先のページ
         MaterialPageRoute(
             builder: (context) => ReviewWordsPage(allWordsCopy: allWordsCopy)),
       );
@@ -76,12 +79,14 @@ class _FlashcardState extends State<Flashcard> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            // 単語を表示
             Text(
               currentWord,
               style: const TextStyle(fontSize: 24),
             ),
             // 意味を表示するかどうかを制御
             if (showMeaning)
+              // 意味を表示
               Text(
                 currentMeaning,
                 style: const TextStyle(fontSize: 20),
