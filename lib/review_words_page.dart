@@ -24,6 +24,7 @@ class _ReviewWordsPageState extends State<ReviewWordsPage> {
         child: Column(
           children: <Widget>[
             Container(
+              //color: Colors.grey[200], // 背景色をグレーに設定 後で消す
               height: 500,
               child: ListView.builder(
                 // ListViewの範囲はスクロールができる
@@ -31,9 +32,17 @@ class _ReviewWordsPageState extends State<ReviewWordsPage> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: widget.allWordsCopy.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(widget.allWordsCopy[index].word),
-                    subtitle: Text(widget.allWordsCopy[index].meaning),
+                  return Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(widget.allWordsCopy[index].word),
+                        subtitle: Text(widget.allWordsCopy[index].meaning),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.95,
+                        child: const Divider(color: Colors.grey),
+                      ),
+                    ],
                   );
                 },
               ),
@@ -47,6 +56,8 @@ class _ReviewWordsPageState extends State<ReviewWordsPage> {
                 );
               },
             ),
+            //
+            const SizedBox(height: 10),
             ElevatedButton(
               child: const Text('end'),
               onPressed: () {

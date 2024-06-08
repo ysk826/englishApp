@@ -185,6 +185,7 @@ class _WordsPageState extends State<WordsPage> {
                         );
                       },
                     ),
+                    // 区切り線
                     const Divider(),
                   ],
                 );
