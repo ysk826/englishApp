@@ -186,7 +186,10 @@ class _WordsPageState extends State<WordsPage> {
                       },
                     ),
                     // 区切り線
-                    const Divider(),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      child: const Divider(),
+                    ),
                   ],
                 );
               },

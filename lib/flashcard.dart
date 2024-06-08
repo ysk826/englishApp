@@ -79,22 +79,39 @@ class _FlashcardState extends State<Flashcard> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // 単語を表示
-            Text(
-              currentWord,
-              style: const TextStyle(fontSize: 24),
-            ),
-            // 意味を表示するかどうかを制御
-            if (showMeaning)
-              // 意味を表示
-              Text(
-                currentMeaning,
-                style: const TextStyle(fontSize: 20),
+            // フラッシュカードの枠
+            Container(
+              // 幅を画面の80%に設定、高さを画面の50%に設定
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.5,
+              padding: const EdgeInsets.all(8.0), // テキストと枠との間にスペースを追加
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black), // 枠線の色を設定
+                borderRadius: BorderRadius.circular(10.0),
               ),
+              child: Column(
+                children: <Widget>[
+                  // 単語を表示
+                  Text(
+                    currentWord,
+                    style: const TextStyle(fontSize: 24),
+                  ),
+                  // 意味を表示するかどうかを制御
+                  if (showMeaning)
+                    // 意味を表示
+                    Text(
+                      currentMeaning,
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20.0),
             // ◯ボタンと×ボタンを横並びに配置
             Row(
               mainAxisAlignment: MainAxisAlignment.center, // 中央に配置
               children: <Widget>[
+                // ◯ボタン
                 Visibility(
                   // showMeaningがfalseのときだけ◯ボタンを表示
                   visible: !showMeaning,
@@ -108,6 +125,7 @@ class _FlashcardState extends State<Flashcard> {
                   ),
                 ),
                 const SizedBox(width: 20),
+                // ×ボタン
                 Visibility(
                   // showMeaningがfalseのときだけ×ボタンを表示
                   visible: !showMeaning,
@@ -122,6 +140,7 @@ class _FlashcardState extends State<Flashcard> {
                 ),
               ],
             ),
+            // Nextボタン
             Visibility(
               // showMeaningがtrueのときだけボタンを表示
               visible: showMeaning,

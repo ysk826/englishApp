@@ -17,6 +17,8 @@ class _ReviewWordsPageState extends State<ReviewWordsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // 戻るボタンを非表示
+        automaticallyImplyLeading: false,
         title: const Text('Review Words'),
       ),
       // スクロール可能なウィジェット
