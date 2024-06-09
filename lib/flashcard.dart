@@ -75,7 +75,7 @@ class _FlashcardState extends State<Flashcard> {
       body: Container(
         // 幅を画面いっぱいに広げる
         width: double.infinity,
-        color: Colors.grey[400],
+        color: Colors.grey[400], // 背景色をグレーに設定 後で消す
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -84,12 +84,15 @@ class _FlashcardState extends State<Flashcard> {
               // 幅を画面の80%に設定、高さを画面の50%に設定
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.height * 0.5,
-              padding: const EdgeInsets.all(8.0), // テキストと枠との間にスペースを追加
+              // テキストと枠の間に8pxのpaddingを設定
+              padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black), // 枠線の色を設定
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Column(
+                // 中央に配置
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   // 単語を表示
                   Text(
