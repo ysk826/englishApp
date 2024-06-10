@@ -9,7 +9,8 @@ class Flashcard extends StatefulWidget {
   _FlashcardState createState() => _FlashcardState();
 }
 
-class _FlashcardState extends State<Flashcard> {
+class _FlashcardState extends State<Flashcard>
+    with SingleTickerProviderStateMixin {
   final _databaseHelper = DatabaseHelper();
 
   // フラッシュカードとそのコピー
@@ -23,10 +24,33 @@ class _FlashcardState extends State<Flashcard> {
   // 意味の表示を切り替えるためのフラグ
   bool showMeaning = false;
 
+  // AnimationControllerとAnimationを追加
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
+
+    // AnimationControllerを初期化
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 1000),
+      vsync: this,
+    );
+
+    // Tweenを使用してアニメーションの範囲を定義
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
+      ..addListener(() {
+        setState(() {});
+      });
     setupWords();
+  }
+
+  @override
+  void dispose() {
+    // AnimationControllerを破棄
+    _controller.dispose();
+    super.dispose();
   }
 
   // 最初に実行されるメソッド
@@ -63,6 +87,8 @@ class _FlashcardState extends State<Flashcard> {
     }
     // 次の単語を表示する時は意味を隠す
     showMeaning = false;
+    // アニメーションを開始
+    //_controller.forward(from: 0.0);
     setState(() {});
   }
 
@@ -80,33 +106,73 @@ class _FlashcardState extends State<Flashcard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // フラッシュカードの枠
-            Container(
-              // 幅を画面の80%に設定、高さを画面の50%に設定
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.height * 0.5,
-              // テキストと枠の間に8pxのpaddingを設定
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black), // 枠線の色を設定
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Column(
-                // 中央に配置
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  // 単語を表示
-                  Text(
-                    currentWord,
-                    style: const TextStyle(fontSize: 24),
-                  ),
-                  // 意味を表示するかどうかを制御
-                  if (showMeaning)
-                    // 意味を表示
-                    Text(
-                      currentMeaning,
-                      style: const TextStyle(fontSize: 20),
+            // Transformを使用してアニメーションを適用
+            Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001)
+                ..rotateY(3.14 * (showMeaning ? _animation.value : 0.0)),
+              child: Container(
+
+                // 幅を画面の80%に設定、高さを画面の50%に設定
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.5,
+                // テキストと枠の間に8pxのpaddingを設定
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black), // 枠線の色を設定
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    // 表面のテキスト
+                    Visibility(
+                      visible: !showMeaning,
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..rotateY(
+                              3.14 * (showMeaning ? -_animation.value : 0.0)),
+                        child: Column(
+                          // 中央に配置
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            // 単語を表示
+                            Text(
+                              currentWord,
+                              style: const TextStyle(fontSize: 24),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                ],
+                    // 裏面のテキスト
+                    Visibility(
+                      visible: showMeaning && _animation.value >= 0.5,
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..rotateY(showMeaning ? 3.14 : 0.0),
+                        child: Column(
+                          // 意味を表示するかどうかを制御
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              currentWord,
+                              style: const TextStyle(fontSize: 24),
+                            ),
+                            Text(
+                              currentMeaning,
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20.0),
@@ -123,6 +189,7 @@ class _FlashcardState extends State<Flashcard> {
                     onPressed: () {
                       setState(() {
                         showMeaning = true;
+                        _controller.forward(from: 0.0);
                       });
                     },
                   ),
@@ -137,6 +204,7 @@ class _FlashcardState extends State<Flashcard> {
                     onPressed: () {
                       setState(() {
                         showMeaning = true;
+                        _controller.forward(from: 0.0);
                       });
                     },
                   ),
