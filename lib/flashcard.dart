@@ -129,10 +129,11 @@ class _FlashcardState extends State<Flashcard>
                   children: <Widget>[
                     // 表面のテキスト
                     Visibility(
-                      visible: !showMeaning,
+                      visible: !showMeaning || _animation.value < 0.5,
                       child: Transform(
                         alignment: Alignment.center,
                         transform: Matrix4.identity()
+                          ..setEntry(3, 2, 0.001)
                           ..rotateY(
                               3.14 * (showMeaning ? -_animation.value : 0.0)),
                         child: Column(
@@ -140,9 +141,15 @@ class _FlashcardState extends State<Flashcard>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             // 単語を表示
-                            Text(
-                              currentWord,
-                              style: const TextStyle(fontSize: 24),
+                            Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.identity()
+                                ..setEntry(3, 2, 0.001)
+                                ..rotateY(3.14 * (showMeaning ? -_animation.value : 0.0)),
+                              child: Text(
+                                currentWord,
+                                style: const TextStyle(fontSize: 24),
+                              ),
                             ),
                           ],
                         ),
