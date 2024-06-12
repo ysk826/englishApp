@@ -34,11 +34,12 @@ class _FlashcardState extends State<Flashcard>
 
     // AnimationControllerを初期化
     _controller = AnimationController(
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 500),
       vsync: this,
     );
 
     // Tweenを使用してアニメーションの範囲を定義
+    // アニメーションの値の始めは0.0、最後は1.0、動的に変化
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
       ..addListener(() {
         setState(() {});
@@ -87,8 +88,6 @@ class _FlashcardState extends State<Flashcard>
     }
     // 次の単語を表示する時は意味を隠す
     showMeaning = false;
-    // アニメーションを開始
-    //_controller.forward(from: 0.0);
     setState(() {});
   }
 
@@ -98,38 +97,46 @@ class _FlashcardState extends State<Flashcard>
       appBar: AppBar(
         title: const Text('Word Learning'),
       ),
+      // フラッシュカードの表示
       body: Container(
         // 幅を画面いっぱいに広げる
         width: double.infinity,
         color: Colors.grey[400], // 背景色をグレーに設定 後で消す
         child: Column(
+          // 中央に配置
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // フラッシュカードの枠
-            // Transformを使用してアニメーションを適用
+            // Transformを使用してアニメーションをContainerに適用
             Transform(
               alignment: Alignment.center,
+              // 3Dアニメーションを適用
               transform: Matrix4.identity()
                 ..setEntry(3, 2, 0.001)
+                // Y軸を中心に回転
                 ..rotateY(3.14 * (showMeaning ? _animation.value : 0.0)),
+              // フラッシュカードの枠をContainerで作成
               child: Container(
-
                 // 幅を画面の80%に設定、高さを画面の50%に設定
                 width: MediaQuery.of(context).size.width * 0.8,
                 height: MediaQuery.of(context).size.height * 0.5,
                 // テキストと枠の間に8pxのpaddingを設定
                 padding: const EdgeInsets.all(8.0),
+                // 枠の装飾
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border.all(color: Colors.black), // 枠線の色を設定
+                  border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
+                // Widgetを同じ場所に置くためにStackで重ねる
                 child: Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-                    // 表面のテキスト
+                    // 表面のテキスト(単語のみ)
                     Visibility(
+                      // visibleプロパティで表示を制御
+                      // showMeaningがfalse、またはアニメーションの値が0.5未満のときに表示
                       visible: !showMeaning || _animation.value < 0.5,
+                      // Transformを使用してアニメーションをTextに適用
                       child: Transform(
                         alignment: Alignment.center,
                         transform: Matrix4.identity()
