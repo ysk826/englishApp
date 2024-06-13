@@ -137,34 +137,23 @@ class _FlashcardState extends State<Flashcard>
                       // showMeaningがfalse、またはアニメーションの値が0.5未満のときに表示
                       visible: !showMeaning || _animation.value < 0.5,
                       // Transformを使用してアニメーションをTextに適用
-                      child: Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.identity()
-                          ..setEntry(3, 2, 0.001)
-                          ..rotateY(
-                              3.14 * (showMeaning ? -_animation.value : 0.0)),
-                        child: Column(
-                          // 中央に配置
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            // 単語を表示
-                            Transform(
-                              alignment: Alignment.center,
-                              transform: Matrix4.identity()
-                                ..setEntry(3, 2, 0.001)
-                                ..rotateY(3.14 * (showMeaning ? -_animation.value : 0.0)),
-                              child: Text(
-                                currentWord,
-                                style: const TextStyle(fontSize: 24),
-                              ),
-                            ),
-                          ],
-                        ),
+                      child: Column(
+                        // 中央に配置
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // 単語を表示
+                          Text(
+                            currentWord,
+                            style: const TextStyle(fontSize: 24),
+                          ),
+                        ],
                       ),
                     ),
                     // 裏面のテキスト
+                    // 単語と意味を表示
                     Visibility(
                       visible: showMeaning && _animation.value >= 0.5,
+                      // Textの反転を防ぐためにTransformを使用
                       child: Transform(
                         alignment: Alignment.center,
                         transform: Matrix4.identity()
