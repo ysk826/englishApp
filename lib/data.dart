@@ -25,6 +25,7 @@ class DatabaseHelper {
   }
 
   // データベースを作成する
+  // table名はwords、カラムはid, word, meaning
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE words (
@@ -89,5 +90,12 @@ class DatabaseHelper {
         meaning: maps[i]['meaning'],
       );
     });
+  }
+
+  // データベースから単語が存在するか確認する
+  Future<bool> wordExists(String word) async {
+    var dbClient = await database;
+    var result = await dbClient.rawQuery('SELECT word FROM words WHERE word = ?', [word]);
+    return result.isNotEmpty;
   }
 }
