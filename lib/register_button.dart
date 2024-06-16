@@ -17,6 +17,8 @@ class RegisterButton extends StatelessWidget {
 
     if (Platform.isIOS) {
       // 登録ボタン
+      // 文字の空文字チェック、単語の重複チェック
+      // 登録済みであればポップアップを表示、登録されていなければモーダルを表示
       return CupertinoButton(
         child: Text(label),
         color: CupertinoColors.activeBlue,
@@ -26,18 +28,20 @@ class RegisterButton extends StatelessWidget {
           String word = controller.text.trim();
           // 入力された文字列が空でない場合、モーダルを表示
           if (word.isNotEmpty) {
-            // 単語がすでに存在するかどうかを確認
+            // 単語がすでに登録されてれば、ポップアップを表示
+            // 単語が登録されていなければ、意味を登録するモーダルを表示
             if (await _databaseHelper.wordExists(word)) {
               // 単語がすでに存在する場合はポップアップを表示
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text('Error'),
-                    content: Text('The word is already registered.'),
+                    title: const Icon(Icons.error),
+                    content: const Text('The word is already registered.'),
                     actions: <Widget>[
                       TextButton(
-                        child: Text('Close'),
+                        child: const Text('Close'),
+                        // ポップアップを閉じる
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
