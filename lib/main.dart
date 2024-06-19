@@ -1,7 +1,7 @@
 import 'package:english_app/words_page.dart';
 import 'package:flutter/material.dart';
-import 'data.dart';
 import 'flashcard.dart';
+import 'setting_page.dart';
 import 'text_field.dart';
 import 'register_button.dart';
 
@@ -51,7 +51,11 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              
+              // 設定画面へ遷移
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingPage() ),
+              );
             },
           ),
         ],
