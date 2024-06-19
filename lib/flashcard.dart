@@ -88,6 +88,9 @@ class _FlashcardState extends State<Flashcard>
     }
     // 次の単語を表示する時は意味を隠す
     showMeaning = false;
+    // アニメーションをリセットして開始
+    _controller.reset();
+    _controller.forward();
     setState(() {});
   }
 

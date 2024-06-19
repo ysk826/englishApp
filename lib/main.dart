@@ -46,6 +46,15 @@ class _MyHomePageState extends State<MyHomePage> {
             fontSize: 30.0,
           ),
         ),
+        actions: <Widget>[
+          // 設定ボタン
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              
+            },
+          ),
+        ],
       ),
       body: Padding(
         // 上部にスペースを追加
@@ -88,7 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     context,
                     MaterialPageRoute(builder: (context) => Flashcard()),
                   );
-                },)
+                },
+              )
             ],
           ),
         ),
