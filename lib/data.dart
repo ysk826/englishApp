@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'card_word.dart';
+import 'settings.dart';
 
 class DatabaseHelper {
   static Database? _database;
@@ -83,7 +86,11 @@ class DatabaseHelper {
   Future<List<CardWord>> getCardWords() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('words');
-    return List.generate(maps.length, (i) {
+
+    // SettingsからselectedCountを取得
+    int selectedCount = await Settings.getSelectedCount();
+
+    return List.generate(min(maps.length, selectedCount), (i) {
       return CardWord(
         id: maps[i]['id'],
         word: maps[i]['word'],

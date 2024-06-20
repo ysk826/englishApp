@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'settings.dart';
+
 class SettingPage extends StatefulWidget {
   @override
   _SettingPageState createState() => _SettingPageState();
@@ -8,6 +10,33 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   final List<int> flashcardCounts = [10, 20, 30, 40, 50];
   int selectedCount = 10;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedCount();
+  }
+
+  Future<void> _loadSelectedCount() async {
+    selectedCount = await Settings.getSelectedCount();
+    setState(() {});
+  }
+
+  Future<void> _incrementCount() async {
+    if (selectedCount < 50) {
+      selectedCount += 1;
+      await Settings.setSelectedCount(selectedCount);
+      setState(() {});
+    }
+  }
+
+  Future<void> _decrementCount() async {
+    if (selectedCount > 1) {
+      selectedCount -= 1;
+      await Settings.setSelectedCount(selectedCount);
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,24 +83,12 @@ class _SettingPageState extends State<SettingPage> {
                       child: Text('$selectedCount'),
                     ),
                     IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () {
-                        setState(() {
-                          if (selectedCount > 1) { // Minimum limit
-                            selectedCount -= 1;
-                          }
-                        });
-                      },
+                      icon: const Icon(Icons.remove),
+                      onPressed: _decrementCount
                     ),
                     IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {
-                        setState(() {
-                          if (selectedCount < 50) { // Maximum limit
-                            selectedCount += 1;
-                          }
-                        });
-                      },
+                      icon: const Icon(Icons.add),
+                      onPressed: _incrementCount
                     ),
                   ],
                 )
