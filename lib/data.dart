@@ -82,21 +82,29 @@ class DatabaseHelper {
     );
   }
 
-  // データベースからフラッシュカードの単語を取得する
+  // データベースからフラッシュカードの単語を取得し、シャッフルする
   Future<List<CardWord>> getCardWords() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('words');
+    // データベースから全ての単語をコピー
+    final List<Map<String, dynamic>> maps = List<Map<String, dynamic>>.from(await db.query('words'));
+
+    // リストをシャッフル
+    maps.shuffle();
 
     // SettingsからselectedCountを取得
     int selectedCount = await Settings.getSelectedCount();
 
-    return List.generate(min(maps.length, selectedCount), (i) {
+    // selectedCountがmaps.lengthを超えないようにする
+    selectedCount = min(maps.length, selectedCount);
+
+    return List.generate( selectedCount, (i) {
       return CardWord(
         id: maps[i]['id'],
         word: maps[i]['word'],
         meaning: maps[i]['meaning'],
       );
     });
+
   }
 
   // データベースから単語が存在するか確認する
