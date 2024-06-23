@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'settings.dart';
 
 class SettingPage extends StatefulWidget {
@@ -17,11 +16,13 @@ class _SettingPageState extends State<SettingPage> {
     _loadSelectedCount();
   }
 
+  // 選択されたフラッシュカードの数を読み込む
   Future<void> _loadSelectedCount() async {
     selectedCount = await Settings.getSelectedCount();
     setState(() {});
   }
 
+  // フラッシュカードの数を増やす
   Future<void> _incrementCount() async {
     if (selectedCount < 50) {
       selectedCount += 1;
@@ -30,6 +31,7 @@ class _SettingPageState extends State<SettingPage> {
     }
   }
 
+  // フラッシュカードの数を減らす
   Future<void> _decrementCount() async {
     if (selectedCount > 1) {
       selectedCount -= 1;
