@@ -98,7 +98,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Flashcard()),
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => Flashcard(),
+                      transitionDuration: Duration(seconds: 1),
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        );
+                      },
+                    ),
                   );
                 },
               )
