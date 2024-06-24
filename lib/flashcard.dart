@@ -1,6 +1,7 @@
 import 'package:english_app/card_word.dart';
 import 'package:flutter/material.dart';
 import 'data.dart';
+import 'main.dart';
 import 'review_words_page.dart';
 
 // フラッシュカードのページ
@@ -98,6 +99,16 @@ class _FlashcardState extends State<Flashcard>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // メインページに戻るボタン
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const MyHomePage()),
+                  (Route<dynamic> route) => false,
+            );
+          },
+        ),
         title: const Text('Word Learning'),
       ),
       // フラッシュカードの表示
