@@ -7,8 +7,7 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  final List<int> flashcardCounts = [10, 20, 30, 40, 50];
-  int selectedCount = 10;
+  late int selectedCount;
 
   @override
   void initState() {
