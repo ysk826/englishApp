@@ -100,7 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) => Flashcard(),
-                      transitionDuration: Duration(seconds: 1),
+                      // 遷移時のアニメーションの時間
+                      transitionDuration: const Duration(milliseconds: 250),
                       transitionsBuilder: (context, animation, secondaryAnimation, child) {
                         return FadeTransition(
                           opacity: animation,

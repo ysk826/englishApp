@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'card_word.dart';
 import 'flashcard.dart';
+import 'main.dart';
 
 // 単語の復習ページ
 class ReviewWordsPage extends StatefulWidget {
@@ -49,22 +50,51 @@ class _ReviewWordsPageState extends State<ReviewWordsPage> {
                 },
               ),
             ),
+            // try againボタン
             ElevatedButton(
               child: const Text('try again'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Flashcard()),
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        Flashcard(),
+                    // 遷移時のアニメーションの時間
+                    transitionDuration: const Duration(milliseconds: 250),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      );
+                    },
+                  ),
                 );
               },
             ),
             //
             const SizedBox(height: 10),
+            // endボタン
             ElevatedButton(
               child: const Text('end'),
               onPressed: () {
-                Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName));
+                // pushAndRemoveUntilで全てのページを削除してMyAppに遷移
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        const MyApp(),
+                    transitionDuration: const Duration(milliseconds: 200),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      );
+                    },
+                  ),
+                  (Route<dynamic> route) => false,
+                );
               },
             ),
           ],
