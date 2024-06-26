@@ -100,12 +100,24 @@ class _FlashcardState extends State<Flashcard>
     return Scaffold(
       appBar: AppBar(
         // メインページに戻るボタン
+        // フェードアウトのアニメーションを適用
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const MyHomePage()),
-                  (Route<dynamic> route) => false,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const MyHomePage(),
+                transitionDuration: const Duration(milliseconds: 250),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+              ),
+              (Route<dynamic> route) => false,
             );
           },
         ),

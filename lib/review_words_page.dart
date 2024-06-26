@@ -75,15 +75,16 @@ class _ReviewWordsPageState extends State<ReviewWordsPage> {
             //
             const SizedBox(height: 10),
             // endボタン
+            // フェードアウトのアニメーションを適用
             ElevatedButton(
               child: const Text('end'),
               onPressed: () {
-                // pushAndRemoveUntilで全てのページを削除してMyAppに遷移
+                // pushAndRemoveUntilで全てのページを削除してMyHomePageに遷移
                 Navigator.pushAndRemoveUntil(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        const MyApp(),
+                        const MyHomePage(),
                     transitionDuration: const Duration(milliseconds: 200),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
