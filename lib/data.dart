@@ -1,29 +1,31 @@
+import 'dart:io';
 import 'dart:math';
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-
 import 'card_word.dart';
 import 'settings.dart';
 
+// データベースを管理するクラス
 class DatabaseHelper {
   static Database? _database;
   static const _databaseName = "my_database.db";
 
+  // getterメソッド
   Future<Database> get database async {
     // databaseがnullでない場合は、databaseを返す
     if (_database != null) {
       return _database!;
     }
+    // databaseがnullの場合は、初期化する
     _database = await _initDatabase();
     return _database!;
   }
 
   // データベースを初期化する
   Future<Database> _initDatabase() async {
-    final documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, _databaseName);
+    final Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    final String path = join(documentsDirectory.path, _databaseName);
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
