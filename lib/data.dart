@@ -11,7 +11,8 @@ class DatabaseHelper {
   static Database? _database;
   static const _databaseName = "my_database.db";
 
-  // getterメソッド
+  // databaseのgetterメソッド
+  // singletonパターンを使用して、データベースを初期化する
   Future<Database> get database async {
     // databaseがnullでない場合は、databaseを返す
     if (_database != null) {
@@ -22,7 +23,7 @@ class DatabaseHelper {
     return _database!;
   }
 
-  // データベースを初期化する
+  // データベースを作成する
   Future<Database> _initDatabase() async {
     final Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final String path = join(documentsDirectory.path, _databaseName);
@@ -43,8 +44,6 @@ class DatabaseHelper {
 
   // データベースに単語と意味を追加する
   Future<void> insertWord(String word, String meaning) async {
-    print(
-        'insertWord called with word: $word and meaning: $meaning'); // Debug statement
     final db = await database;
     await db.insert(
       "words",
