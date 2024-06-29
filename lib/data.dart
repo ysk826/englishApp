@@ -53,13 +53,15 @@ class DatabaseHelper {
   }
 
   // データベースから単語を取得する
+  // 単語と意味をMapでコピーして返す
   Future<List<Map<String, dynamic>>> getWords() async {
     final db = await database;
-    var result = await db.query('words');
+    List<Map<String, Object?>> result = await db.query('words');
     return List<Map<String, dynamic>>.from(result);
   }
 
   // データベースから単語を削除する
+  // idを使用して削除
   Future<void> deleteWord(int id) async {
     final db = await database;
     await db.delete(
