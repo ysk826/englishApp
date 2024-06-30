@@ -25,7 +25,8 @@ class DatabaseHelper {
 
   // データベースを作成する
   Future<Database> _initDatabase() async {
-    final Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    final Directory documentsDirectory =
+        await getApplicationDocumentsDirectory();
     final String path = join(documentsDirectory.path, _databaseName);
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
@@ -72,12 +73,12 @@ class DatabaseHelper {
   }
 
   // データベースの単語を更新する
-  Future<void> updateWord(int id, String newText) async {
+  Future<void> updateWord(int id, String newMeaning) async {
     final db = await database;
 
     await db.update(
       'words',
-      {'meaning': newText},
+      {'meaning': newMeaning},
       where: 'id = ?',
       whereArgs: [id],
     );
@@ -87,7 +88,8 @@ class DatabaseHelper {
   Future<List<CardWord>> getCardWords() async {
     final db = await database;
     // データベースから全ての単語をコピー
-    final List<Map<String, dynamic>> maps = List<Map<String, dynamic>>.from(await db.query('words'));
+    final List<Map<String, dynamic>> maps =
+        List<Map<String, dynamic>>.from(await db.query('words'));
 
     // リストをシャッフル
     maps.shuffle();
@@ -98,20 +100,21 @@ class DatabaseHelper {
     // selectedCountがmaps.lengthを超えないようにする
     selectedCount = min(maps.length, selectedCount);
 
-    return List.generate( selectedCount, (i) {
+    return List.generate(selectedCount, (i) {
       return CardWord(
         id: maps[i]['id'],
         word: maps[i]['word'],
         meaning: maps[i]['meaning'],
       );
     });
-
   }
 
   // データベースから単語が存在するか確認する
+  // 存在する場合はtrueを返す
   Future<bool> wordExists(String word) async {
-    var dbClient = await database;
-    var result = await dbClient.rawQuery('SELECT word FROM words WHERE word = ?', [word]);
+    final db = await database;
+    List<Map<String, Object?>> result =
+        await db.rawQuery('SELECT word FROM words WHERE word = ?', [word]);
     return result.isNotEmpty;
   }
 }
