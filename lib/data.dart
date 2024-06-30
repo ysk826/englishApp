@@ -73,10 +73,8 @@ class DatabaseHelper {
 
   // データベースの単語を更新する
   Future<void> updateWord(int id, String newText) async {
-    // Open the database
-    final db = await openDatabase('my_database.db');
+    final db = await database;
 
-    // Update the word's meaning
     await db.update(
       'words',
       {'meaning': newText},
