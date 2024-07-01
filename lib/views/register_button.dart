@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'data.dart';
+import '../models/data.dart';
 
 class RegisterButton extends StatelessWidget {
   final String label;

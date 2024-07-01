@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'data.dart';
+import '../models/data.dart';
 import 'editable_text.dart';
 
 class WordsPage extends StatefulWidget {

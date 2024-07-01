@@ -1,6 +1,6 @@
-import 'package:english_app/card_word.dart';
+import 'package:english_app/models/card_word.dart';
 import 'package:flutter/material.dart';
-import 'data.dart';
+import '../models/data.dart';
 import 'main.dart';
 import 'review_words_page.dart';
 

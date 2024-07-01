@@ -1,6 +1,6 @@
-import 'package:english_app/words_page.dart';
+import 'package:english_app/views/words_page.dart';
 import 'package:flutter/material.dart';
-import 'flashcard.dart';
+import 'flashcard_page.dart';
 import 'setting_page.dart';
 import 'text_field.dart';
 import 'register_button.dart';

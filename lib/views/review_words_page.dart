@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'card_word.dart';
-import 'flashcard.dart';
+import '../models/card_word.dart';
+import 'flashcard_page.dart';
 import 'main.dart';
 
 // 単語の復習ページ
