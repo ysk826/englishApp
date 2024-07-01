@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'card_word.dart';
+import '../models/card_word.dart';
 import '../views/settings.dart';
 
 // データベースを管理するクラス
