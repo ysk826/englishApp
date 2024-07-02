@@ -62,9 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Padding(
         // 上部にスペースを追加
         padding: const EdgeInsets.only(top: 20.0),
-        // 背景色をグレーに設定
+        // 背景色をグレー200に設定
         child: Container(
-          color: Colors.grey,
+          color: Colors.grey[200],
           // 中央に配置
           child: Column(
             mainAxisSize: MainAxisSize.min,
