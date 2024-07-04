@@ -32,6 +32,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+// WidgetsBindingObserverを継承してアプリのライフサイクルを監視
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final controller = TextEditingController();
   final clipboardController = ClipboardController();
@@ -40,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
+    // アプリを初めて起動した時にクリップボードのデータを取得
     initClipboardData();
   }
 
@@ -51,16 +53,18 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    // アプリが再開された時にクリップボードのデータを取得
     if (state == AppLifecycleState.resumed) {
       initClipboardData();
     }
   }
 
+  // クリップボードのデータを取得
   Future<void> initClipboardData() async {
     String clipboardData = await clipboardController.getClipboardData();
     controller.text = clipboardData;
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               // 設定画面へ遷移
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingPage() ),
+                MaterialPageRoute(builder: (context) => SettingPage()),
               );
             },
           ),
@@ -126,10 +130,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => Flashcard(),
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          Flashcard(),
                       // 遷移時のアニメーションの時間
                       transitionDuration: const Duration(milliseconds: 250),
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
                         return FadeTransition(
                           opacity: animation,
                           child: child,
