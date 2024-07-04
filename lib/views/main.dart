@@ -1,5 +1,6 @@
 import 'package:english_app/views/words_page.dart';
 import 'package:flutter/material.dart';
+import '../controllers/clipboard.dart';
 import 'flashcard_page.dart';
 import 'setting_page.dart';
 import 'text_field.dart';
@@ -31,9 +32,35 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final controller = TextEditingController();
+  final clipboardController = ClipboardController();
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addObserver(this);
+    initClipboardData();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      initClipboardData();
+    }
+  }
+
+  Future<void> initClipboardData() async {
+    String clipboardData = await clipboardController.getClipboardData();
+    controller.text = clipboardData;
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
