@@ -1,3 +1,4 @@
+import 'package:english_app/views/settings.dart';
 import 'package:english_app/views/words_page.dart';
 import 'package:flutter/material.dart';
 import '../controllers/clipboard.dart';
@@ -60,9 +61,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   // クリップボードのデータを取得
+  // クリップボードの貼り付け機能がオンの時にクリップボードのデータを取得
   Future<void> initClipboardData() async {
-    String clipboardData = await clipboardController.getClipboardData();
-    controller.text = clipboardData;
+    bool clipboardPaste = await Settings.getClipboardPaste();
+    if (clipboardPaste) {
+      String clipboardData = await clipboardController.getClipboardData();
+      controller.text = clipboardData;
+    }
   }
 
   @override

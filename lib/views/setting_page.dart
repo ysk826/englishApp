@@ -8,12 +8,14 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   late int selectedCount;
+  late bool clipboardPaste;
 
-  // コンストラクタ、設定したカードの数を読み込む
+  // コンストラクタ、設定したカードの数、クリップボード貼り付けの設定を読み込む
   @override
   void initState() {
     super.initState();
     _loadSelectedCount();
+    _loadClipboardPaste();
   }
 
   // 選択されたフラッシュカードの数を読み込む
@@ -38,6 +40,19 @@ class _SettingPageState extends State<SettingPage> {
       await Settings.setSelectedCount(selectedCount);
       setState(() {});
     }
+  }
+
+  // クリップボードの貼り付け機能のon/offを読み込む
+  Future<void> _loadClipboardPaste() async {
+    clipboardPaste = await Settings.getClipboardPaste();
+    setState(() {});
+  }
+
+  // クリップボードの貼り付け機能のon/offを切り替える
+  Future<void> _toggleClipboardPaste() async {
+    clipboardPaste = !clipboardPaste;
+    await Settings.setClipboardPaste(clipboardPaste);
+    setState(() {});
   }
 
   @override
@@ -95,10 +110,17 @@ class _SettingPageState extends State<SettingPage> {
                       onPressed: _decrementCount),
                   // プラスボタン
                   IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: _incrementCount),
+                      icon: const Icon(Icons.add), onPressed: _incrementCount),
                 ],
               ),
+            ),
+            // SwitchListTileを作成
+            SwitchListTile(
+              title: const Text('Clipboard Paste'),
+              value: clipboardPaste,
+              onChanged: (bool value) {
+                _toggleClipboardPaste();
+              },
             ),
           ],
         ),
