@@ -114,13 +114,30 @@ class _SettingPageState extends State<SettingPage> {
                 ],
               ),
             ),
-            // SwitchListTileを作成
-            SwitchListTile(
-              title: const Text('Clipboard Paste'),
-              value: clipboardPaste,
-              onChanged: (bool value) {
-                _toggleClipboardPaste();
-              },
+            const SizedBox(
+              height: 30,
+            ),
+            // containerで枠を作成、クリップボード貼り付けの設定
+            Container(
+              // 幅を画面の80%に設定、高さを画面の50%に設定
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.07,
+              // 枠の装飾
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              // SwitchListTileを作成
+              child: ListTile(
+                title: const Text('Clipboard Paste'),
+                trailing: Switch(
+                  value: clipboardPaste,
+                  onChanged: (bool value) {
+                    _toggleClipboardPaste();
+                  },
+                ),
+              )
             ),
           ],
         ),
