@@ -97,10 +97,14 @@ class _SettingPageState extends State<SettingPage> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      '$selectedCount',
-                      style: const TextStyle(
-                        fontSize: 19,
+                    child: Container(
+                      // 後で消す
+                      color: Colors.grey[300], // 後で消す
+                      child: Text(
+                        '$selectedCount',
+                        style: const TextStyle(
+                          fontSize: 19,
+                        ),
                       ),
                     ),
                   ),
@@ -128,17 +132,21 @@ class _SettingPageState extends State<SettingPage> {
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              // SwitchListTileを作成
-              child: ListTile(
-                title: const Text('Clipboard Paste'),
-                trailing: Switch(
-                  value: clipboardPaste,
-                  onChanged: (bool value) {
-                    _toggleClipboardPaste();
-                  },
+              // ListTileを作成
+              child: Container(
+                // 後で消す
+                color: Colors.grey[300], // 後で消す
+                child: ListTile(
+                  title: const Text('Clipboard Paste'),
+                  trailing: Switch(
+                    value: clipboardPaste,
+                    onChanged: (bool value) {
+                      _toggleClipboardPaste();
+                    },
+                  ),
                 ),
-              )
-            ),
+              ),
+            )
           ],
         ),
       ),
