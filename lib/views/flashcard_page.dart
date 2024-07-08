@@ -127,7 +127,7 @@ class _FlashcardState extends State<Flashcard>
       body: Container(
         // 幅を画面いっぱいに広げる
         width: double.infinity,
-        color: Colors.grey[400], // 背景色をグレーに設定 後で消す
+        color: Color(0xffF2F1E9), // 背景色をグレーに設定 後で消す
         child: Column(
           // 中央に配置
           mainAxisAlignment: MainAxisAlignment.center,
@@ -149,7 +149,7 @@ class _FlashcardState extends State<Flashcard>
                 padding: const EdgeInsets.all(8.0),
                 // 枠の装飾
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color(0xffE8E6D9),
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
