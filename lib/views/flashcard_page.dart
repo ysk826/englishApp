@@ -102,7 +102,7 @@ class _FlashcardState extends State<Flashcard>
         // メインページに戻るボタン
         // フェードアウトのアニメーションを適用
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.home),
           onPressed: () {
             Navigator.of(context).pushAndRemoveUntil(
               PageRouteBuilder(
