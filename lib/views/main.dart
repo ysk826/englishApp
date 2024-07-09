@@ -103,9 +103,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           color: Colors.grey[200],
           // 中央に配置
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            // Columnを利用可能な全ての垂直スペースを占有
+            // Columnの子要素の水平方向の配置を中央に設定
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // テキストフィールドを呼び出す
+              // 単語入力のテキストフィールドを呼び出す
               WordTextField(controller: controller),
               const SizedBox(
                 height: 20,
