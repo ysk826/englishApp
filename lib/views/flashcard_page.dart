@@ -99,6 +99,8 @@ class _FlashcardState extends State<Flashcard>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // 背景色を設定
+        backgroundColor: const Color(0xffF2F1E9),
         // メインページに戻るボタン
         // フェードアウトのアニメーションを適用
         leading: IconButton(
@@ -127,7 +129,7 @@ class _FlashcardState extends State<Flashcard>
       body: Container(
         // 幅を画面いっぱいに広げる
         width: double.infinity,
-        color: Color(0xffF2F1E9), // 背景色をグレーに設定 後で消す
+        color: const Color(0xffF2F1E9), // 背景色をグレーに設定 後で消す
         child: Column(
           // 中央に配置
           mainAxisAlignment: MainAxisAlignment.center,
@@ -149,7 +151,7 @@ class _FlashcardState extends State<Flashcard>
                 padding: const EdgeInsets.all(8.0),
                 // 枠の装飾
                 decoration: BoxDecoration(
-                  color: Color(0xffE8E6D9),
+                  color: const Color(0xffF5F5F4),
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
