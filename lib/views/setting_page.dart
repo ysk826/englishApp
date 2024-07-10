@@ -135,7 +135,7 @@ class _SettingPageState extends State<SettingPage> {
               // ListTileを作成
               child: Container(
                 // 後で消す
-                color: Colors.grey[300], // 後で消す
+                //color: Colors.grey[300], // 後で消す
                 child: ListTile(
                   title: const Text('Clipboard Paste'),
                   trailing: Switch(

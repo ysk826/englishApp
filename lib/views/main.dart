@@ -73,6 +73,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // キーボードが表示された時に画面をリサイズしない
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         // タイトルを表示
         title: const Text(
@@ -97,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       ),
       body: Padding(
         // 上部にスペースを追加
-        padding: const EdgeInsets.only(top: 20.0),
+        padding: const EdgeInsets.only(top: 0.0),
         // 背景色をグレー200に設定
         child: Container(
           color: Colors.grey[200],
@@ -121,38 +123,47 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               const SizedBox(
                 height: 20,
               ),
-              // 単語リストへの遷移ボタンを呼び出す
-              ElevatedButton(
-                child: const Text('Words List'),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    // 単語リスト画面へ遷移
-                    MaterialPageRoute(builder: (context) => const WordsPage()),
-                  );
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // 単語リストへの遷移ボタンを呼び出す
+                  ElevatedButton(
+                    child: const Text('Words List'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        // 単語リスト画面へ遷移
+                        MaterialPageRoute(
+                            builder: (context) => const WordsPage()),
+                      );
+                    },
+                  ),
+                  // ボタン間のスペース
+                  SizedBox(width: 20),
+                  ElevatedButton(
+                    child: const Text('Flashcard'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  Flashcard(),
+                          // 遷移時のアニメーションの時間
+                          transitionDuration: const Duration(milliseconds: 250),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-              ElevatedButton(
-                child: const Text('Flashcard'),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          Flashcard(),
-                      // 遷移時のアニメーションの時間
-                      transitionDuration: const Duration(milliseconds: 250),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        );
-                      },
-                    ),
-                  );
-                },
-              )
             ],
           ),
         ),
