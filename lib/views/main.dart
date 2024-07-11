@@ -97,75 +97,71 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           ),
         ],
       ),
-      body: Padding(
-        // 上部にスペースを追加
-        padding: const EdgeInsets.only(top: 0.0),
-        // 背景色をグレー200に設定
-        child: Container(
-          color: Colors.grey[200],
-          // 中央に配置
-          child: Column(
-            // Columnを利用可能な全ての垂直スペースを占有
-            // Columnの子要素の水平方向の配置を中央に設定
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // 単語入力のテキストフィールドを呼び出す
-              WordTextField(controller: controller),
-              const SizedBox(
-                height: 20,
-              ),
-              // 登録ボタンを呼び出す
-              RegisterButton(
-                label: "登録",
-                controller: controller,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  // 単語リストへの遷移ボタンを呼び出す
-                  ElevatedButton(
-                    child: const Text('Words List'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        // 単語リスト画面へ遷移
-                        MaterialPageRoute(
-                            builder: (context) => const WordsPage()),
-                      );
-                    },
-                  ),
-                  // ボタン間のスペース
-                  SizedBox(width: 20),
-                  ElevatedButton(
-                    child: const Text('Flashcard'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  Flashcard(),
-                          // 遷移時のアニメーションの時間
-                          transitionDuration: const Duration(milliseconds: 250),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            return FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
+      // 背景色をグレー200に設定
+      body: Container(
+        color: Colors.grey[200],
+        // 中央に配置
+        child: Column(
+          // Columnを利用可能な全ての垂直スペースを占有
+          // Columnの子要素の水平方向の配置を中央に設定
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 単語入力のテキストフィールドを呼び出す
+            WordTextField(controller: controller),
+            const SizedBox(
+              height: 20,
+            ),
+            // 登録ボタンを呼び出す
+            RegisterButton(
+              label: "登録",
+              controller: controller,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                // 単語リストへの遷移ボタンを呼び出す
+                ElevatedButton(
+                  child: const Text('Words List'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      // 単語リスト画面へ遷移
+                      MaterialPageRoute(
+                          builder: (context) => const WordsPage()),
+                    );
+                  },
+                ),
+                // ボタン間のスペース
+                SizedBox(width: 20),
+                ElevatedButton(
+                  child: const Text('Flashcard'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Flashcard(),
+                        // 遷移時のアニメーションの時間
+                        transitionDuration: const Duration(milliseconds: 250),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 150.0),
+          ],
         ),
       ),
     );
